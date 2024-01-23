@@ -1,0 +1,13 @@
+{
+  "main": "mail-sys-api.raml",
+  "name": "mail-sys-api",
+  "groupId": "d0d65d7e-a1a6-4d1d-a923-a5d23abb9366",
+  "assetId": "mail-sys-api",
+  "version": "1.0.0",
+  "classifier": "raml",
+  "tags": [],
+  "descriptorVersion": "1.0.0",
+  "organizationId": "d0d65d7e-a1a6-4d1d-a923-a5d23abb9366",
+  "apiVersion": "v1",
+  "originalFormatVersion": "1.0"
+}
