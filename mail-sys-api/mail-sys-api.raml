@@ -1,0 +1,29 @@
+#%RAML 1.0
+title: mail-sys-api
+version: v1
+description: This API can send Email to the Team Leaders, and get emails by ID.
+
+types: 
+  sendMail: !include /Datatype/sendMail-DataType.raml
+
+/mails:
+  post:
+    displayName: sendMail
+    description: This path will send Mail for Team Leaders.
+    body:
+      application/json:
+        example:
+    responses:
+      200:
+        body:
+          application/json:
+            example: !include /Example/sendMail-example.raml
+  get:
+    displayName: getMail
+    description: This path will get a list of Emails.
+    responses:
+      200:
+        body:
+          application/json:
+            example:
+              message: "Get the Mails Successfully!"
