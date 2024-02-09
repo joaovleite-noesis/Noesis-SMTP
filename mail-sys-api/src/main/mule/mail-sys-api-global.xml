@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:api-gateway="http://www.mulesoft.org/schema/mule/api-gateway"
+	xmlns:email="http://www.mulesoft.org/schema/mule/email"
+	xmlns:db="http://www.mulesoft.org/schema/mule/db"
+	xmlns:tls="http://www.mulesoft.org/schema/mule/tls" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="
+http://www.mulesoft.org/schema/mule/email http://www.mulesoft.org/schema/mule/email/current/mule-email.xsd 
+http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd 
+http://www.mulesoft.org/schema/mule/tls http://www.mulesoft.org/schema/mule/tls/current/mule-tls.xsd http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/api-gateway http://www.mulesoft.org/schema/mule/api-gateway/current/mule-api-gateway.xsd">
+	<db:config name="Database_Config" doc:name="Database Config" doc:id="3e3881ec-bebd-466d-b39e-095ab4f703c0" >
+		<db:generic-connection url="jdbc:postgresql://database-1.c9r1lsfx7e56.eu-central-1.rds.amazonaws.com:5432/incidents" driverClassName="org.postgresql.Driver" user="postgres" password="Yc&amp;8q1VNUFs1" />
+	</db:config>
+	<email:smtp-config name="Email_SMTP" doc:name="Email SMTP" doc:id="7897d584-e461-45c1-9023-bf2ce5c65823" >
+		<email:smtp-connection host="${smtp.host}" port="${smtp.port}" user="${smtp.user}" password="${smtp.pass}" >
+			<email:properties >
+				<email:property key="mail.smtp.starttls.enable" value="true" />
+			</email:properties>
+		</email:smtp-connection>
+	</email:smtp-config>
+	<email:imap-config name="Email_IMAP" doc:name="Email IMAP" doc:id="47222089-604d-4bb9-ae21-d7e8f070776a" >
+		<email:imaps-connection host="${imap.host}" user="${imap.user}" password="${imap.pass}" port="${imap.port}">
+			<tls:context >
+				<tls:trust-store insecure="true"/>
+			</tls:context>
+		</email:imaps-connection>
+	</email:imap-config>
+	<configuration-properties doc:name="Configuration properties" doc:id="7183e547-a4f0-4ccb-86d1-2b9a35740132" file="config.yaml" />
+	<api-gateway:autodiscovery apiId="${api.id}" ignoreBasePath="true" doc:name="API Autodiscovery" doc:id="82f1c319-7ef9-4916-842e-51aeb5cdf4c9" flowRef="sendMail_Flow" />
+	
+</mule>
