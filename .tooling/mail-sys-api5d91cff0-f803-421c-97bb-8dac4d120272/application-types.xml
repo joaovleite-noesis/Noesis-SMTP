@@ -1,0 +1,76 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<types:mule xmlns:types="http://www.mulesoft.org/schema/mule/types">
+  <types:catalog>
+    <types:type name="input_sendMail" format="json">
+      <types:shape format="weave" example="examples/input_sendMail-1.json"><![CDATA[%dw 2.0
+
+type input_sendMail = {|
+  ID: Number {"typeId": "int"}, 
+  check_view: String, 
+  status: Boolean, 
+  categoria_ID: Number {"typeId": "int"}, 
+  equipa_respons: Number {"typeId": "int"}, 
+  first_email: Null, 
+  second_email: Null
+|} {"example": "{\\\"ID\\\":1,\\\"check_view\\\":\\\"2024-01-23 12:00:00\\\",\\\"status\\\":false,\\\"categoria_ID\\\":2,\\\"equipa_respons\\\":2,\\\"first_email\\\":null,\\\"second_email\\\":null}"}
+
+]]></types:shape>
+    </types:type>
+    <types:type name="incidentes_metadata" format="json">
+      <types:shape format="weave" example="examples/incidents_Metadata.json"><![CDATA[%dw 2.0
+
+type incidentes_metadata = {|
+  ID: Number {"typeId": "int"}, 
+  titulo: String, 
+  descricao: String, 
+  data_abertura: String, 
+  data_conc_esp: String, 
+  data_conclusao: String, 
+  equipa_respons: Number {"typeId": "int"}, 
+  check_view: String, 
+  status: Boolean, 
+  categoria_ID: Number {"typeId": "int"}, 
+  prioridade_ID: Number {"typeId": "int"}, 
+  validacao_client: Boolean, 
+  first_email: Null, 
+  second_email: Null
+|} {"example": "{\\\"ID\\\":1,\\\"titulo\\\":\\\"Suporte Tech\\\",\\\"descricao\\\":\\\"\\\",\\\"data_abertura\\\":\\\"\\\",\\\"data_conc_esp\\\":\\\"\\\",\\\"data_conclusao\\\":\\\"\\\",\\\"equipa_respons\\\":2,\\\"check_view\\\":\\\"2024-01-23 12:00:00\\\",\\\"status\\\":false,\\\"categoria_ID\\\":2,\\\"prioridade_ID\\\":1,\\\"validacao_client\\\":false,\\\"first_email\\\":null,\\\"second_email\\\":null}"}
+
+]]></types:shape>
+    </types:type>
+    <types:type name="getMails_matadata" format="json">
+      <types:shape format="weave" example="examples/getMails_metadata-3.json"><![CDATA[%dw 2.0
+
+type getMails_matadata = {|
+  Ultimo_Email_ID: Number {"typeId": "int"}, 
+  Email_Enviados: Number {"typeId": "int"}, 
+  Emails_ID: Array<String>
+|} {"example": "{\\\"Ultimo_Email_ID\\\":35,\\\"Email_Enviados\\\":3,\\\"Emails_ID\\\":[\\\"149\\\",\\\"148\\\"]}"}
+
+]]></types:shape>
+    </types:type>
+  </types:catalog>
+  <types:enrichment select="#e381790c-aa77-4dad-9e97-2d66a9c8249b">
+    <types:processor-declaration>
+      <types:input-event>
+        <types:message>
+          <types:payload type="incidentes_metadata"/>
+        </types:message>
+      </types:input-event>
+      <types:output-event>
+        <types:message>
+          <types:payload type="input_sendMail"/>
+        </types:message>
+      </types:output-event>
+    </types:processor-declaration>
+  </types:enrichment>
+  <types:enrichment select="#2c918fcf-3c6c-4bfc-a773-656ec5b7f053">
+    <types:processor-declaration>
+      <types:output-event>
+        <types:message>
+          <types:payload type="getMails_matadata"/>
+        </types:message>
+      </types:output-event>
+    </types:processor-declaration>
+  </types:enrichment>
+</types:mule>

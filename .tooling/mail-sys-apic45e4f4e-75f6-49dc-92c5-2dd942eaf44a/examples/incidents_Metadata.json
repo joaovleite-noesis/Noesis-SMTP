@@ -1,0 +1,16 @@
+{ 
+            "ID": 1,
+            "titulo": "Suporte Tech",
+            "descricao":"",
+            "data_abertura":"",
+            "data_conc_esp":"",
+            "data_conclusao":"",
+            "equipa_respons": 2,
+            "check_view":"2024-01-23 12:00:00",
+            "status": false,
+            "categoria_ID": 2,
+            "prioridade_ID": 1,
+            "validacao_client": false,
+            "first_email": null,
+            "second_email": null 
+}

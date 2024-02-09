@@ -5,9 +5,6 @@
 	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
 http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd
 http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
-	<db:config name="Database_Config" doc:name="Database Config" doc:id="11b2c2b9-106f-4c29-9186-d534a95e6ec4" >
-		<db:generic-connection url="jdbc:postgresql://database-1.c9r1lsfx7e56.eu-central-1.rds.amazonaws.com:5432/incidents" driverClassName="org.postgresql.Driver" user="postgres" password="Yc&amp;8q1VNUFs1" />
-	</db:config>
 	<flow name="createIncident_flow" doc:id="4370bdc3-8dc5-455c-a575-b663b7a9bea4" >
 		<db:insert doc:name="Insert" doc:id="1b4082ad-2b47-4075-997c-19b4b762c1c7" config-ref="Database_Config">
 			<db:sql><![CDATA[INSERT INTO public.incidentes(
