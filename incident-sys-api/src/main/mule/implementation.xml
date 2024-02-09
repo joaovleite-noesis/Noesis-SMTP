@@ -36,6 +36,11 @@ http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/
 		</db:insert>
 		<set-payload value='#["Incidente Criado!"]' doc:name="Incident Created!" doc:id="a6a39b73-334b-4c20-aa86-b422346579b4" />
 		<logger level="INFO" doc:name="Logger" doc:id="94058dc0-0181-45bc-ad7e-0ef5b3dd7a8a" message='#["Incidente Criado!"]'/>
+		<error-handler >
+			<on-error-propagate enableNotifications="true" logException="true" doc:name="On Error Propagate" doc:id="72baab24-8f6f-40fd-a52d-c8a64a22e50f" >
+				<set-payload value="#[error.description]" doc:name="Set Payload" doc:id="cdbb556d-1cfa-49c7-9f77-99edc1988b50" />
+			</on-error-propagate>
+		</error-handler>
 	</flow>
 	<flow name="listIncidents_Flow" doc:id="3a6e16db-3ce8-4c51-b923-1811944613ef" >
 		<db:select doc:name="Select" doc:id="29cda4bd-3e44-47c3-a68f-0feec1b33ddb" config-ref="Database_Config">
@@ -67,6 +72,11 @@ payload map ( payload01 , indexOfPayload01 ) -> {
 			</ee:message>
 		</ee:transform>
 		<logger level="INFO" doc:name="Logger" doc:id="bc2afe07-e849-4007-a6a0-dec8c9bfd022" message="#[payload]"/>
+		<error-handler >
+			<on-error-propagate enableNotifications="true" logException="true" doc:name="On Error Propagate" doc:id="1889cf1f-9ff0-4c0d-905a-d5988094c018" >
+				<set-payload value="#[error.description]" doc:name="Set Payload" doc:id="7e83985a-bc4c-4b8f-a971-e9181cca3ab1" />
+			</on-error-propagate>
+		</error-handler>
 	</flow>
 	<flow name="getIncidentByID_Flow" doc:id="44af58fb-da41-477f-95e6-0281fe325258" >
 		<db:select doc:name="Select" doc:id="00704ad8-ba1a-4e1a-bd22-e3a0b8effe18" config-ref="Database_Config">
@@ -99,6 +109,11 @@ payload map ( payload01 , indexOfPayload01 ) -> {
 			</ee:message>
 		</ee:transform>
 		<logger level="INFO" doc:name="Logger" doc:id="296fd8bf-ed2b-4ee3-be65-89d7529d1b77" message="#[payload]" />
+		<error-handler >
+			<on-error-propagate enableNotifications="true" logException="true" doc:name="On Error Propagate" doc:id="b03c3c98-24cc-4c94-9249-73ad3d436097" >
+				<set-payload value="#[error.description]" doc:name="Set Payload" doc:id="bdbee57a-e62f-4f15-80c2-f73a10c27ffb" />
+			</on-error-propagate>
+		</error-handler>
 	</flow>
 	<flow name="updateIncidents" doc:id="5ffd4445-ed39-457e-9c10-b5ec133d3011" >
 		<choice doc:name="Choice" doc:id="f8f53e3c-52b5-4762-b4a9-3e5124046721" >
@@ -159,6 +174,11 @@ payload map ( payload01 , indexOfPayload01 ) -> {
 				<logger level="INFO" doc:name="No Route Matched" doc:id="3c782fad-cbcd-4e02-885a-f1518d722591" message="No Route Matched"/>
 			</otherwise>
 		</choice>
+		<error-handler >
+			<on-error-propagate enableNotifications="true" logException="true" doc:name="On Error Propagate" doc:id="3ef10500-9c1d-4174-a31c-de8755502707" >
+				<set-payload value="#[error.description]" doc:name="Set Payload" doc:id="ebcac0ca-0d88-4357-9e71-172fbff35d04" />
+			</on-error-propagate>
+		</error-handler>
 	</flow>
 	<flow name="deleteIncidents_Flow" doc:id="d6c9322c-e984-4125-92b3-c01c3b2bb59b" >
 		<db:delete doc:name="Delete" doc:id="f837464c-cbb4-4d2c-a641-3987ce776022" config-ref="Database_Config">
@@ -168,5 +188,10 @@ payload map ( payload01 , indexOfPayload01 ) -> {
 		</db:delete>
 		<set-payload value='#["Incident Deleted!"]' doc:name='"Incident Deleted!"' doc:id="937ff3b1-354c-451f-b716-46a4038647d4" />
 		<logger level="INFO" doc:name="Incident Deleted!" doc:id="dfb38c78-266e-41cc-81e1-61a352299508" message='#["Incident Deleted!"]'/>
+		<error-handler>
+			<on-error-propagate enableNotifications="true" logException="true" doc:name="On Error Propagate" doc:id="34a7f95d-5b53-4ec9-bdf3-2fe4407587b1" >
+				<set-payload value="#[error.description]" doc:name="Set Payload" doc:id="eb636e62-52a3-47e9-a5a1-1d1d84ab5c66" />
+			</on-error-propagate>
+		</error-handler>
 	</flow>
 </mule>
