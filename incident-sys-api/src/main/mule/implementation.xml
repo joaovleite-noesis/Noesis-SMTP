@@ -39,7 +39,7 @@ http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/
 	</flow>
 	<flow name="listIncidents_Flow" doc:id="3a6e16db-3ce8-4c51-b923-1811944613ef" >
 		<db:select doc:name="Select" doc:id="29cda4bd-3e44-47c3-a68f-0feec1b33ddb" config-ref="Database_Config">
-			<db:sql ><![CDATA[SELECT "ID", titulo, descricao, data_abertura, check_view, data_conc_esp, data_conclusao, equipa_respons, status, "categoria_ID", "prioridade_ID", validacao_client, first_email, second_email
+			<db:sql ><![CDATA[SELECT "ID", titulo, descricao, data_abertura, check_view, data_conc_esp, data_conclusao, equipa_respons, responsavel, status, "categoria_ID", "prioridade_ID", validacao_client, first_email, second_email
 	FROM public.incidentes
 	ORDER BY "ID";]]></db:sql>
 		</db:select>
@@ -70,7 +70,7 @@ payload map ( payload01 , indexOfPayload01 ) -> {
 	</flow>
 	<flow name="getIncidentByID_Flow" doc:id="44af58fb-da41-477f-95e6-0281fe325258" >
 		<db:select doc:name="Select" doc:id="00704ad8-ba1a-4e1a-bd22-e3a0b8effe18" config-ref="Database_Config">
-			<db:sql><![CDATA[SELECT "ID", titulo, descricao, data_abertura, check_view, data_conc_esp, data_conclusao, equipa_respons, status, "categoria_ID", "prioridade_ID", validacao_client, first_email, second_email
+			<db:sql><![CDATA[SELECT "ID", titulo, descricao, data_abertura, check_view, data_conc_esp, data_conclusao, equipa_respons, responsavel, status, "categoria_ID", "prioridade_ID", validacao_client, first_email, second_email
 	FROM public.incidentes
 	WHERE "ID" = :ID;]]></db:sql>
 			<db:input-parameters ><![CDATA[#['ID': attributes.uriParams.ID]]]></db:input-parameters>
