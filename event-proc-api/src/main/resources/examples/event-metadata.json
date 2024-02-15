@@ -1,0 +1,17 @@
+{
+  "ID": "9",
+  "titulo": "Preciso de Ajuda",
+  "descricao": "Minha Aplicação não está a funcionar corretamente",
+  "data_abertura": "2024-02-07T14:00:00",
+  "check_view": null,
+  "data_conc_esp": "2024-02-07T17:00:00",
+  "data_conclusao": null,
+  "equipa_respons": 1,
+  "TL_email": "joaodev8@gmail.com",
+  "status": false,
+  "categoria_ID": 1,
+  "prioridade_ID": 1,
+  "validacao_client": false,
+  "first_email": null,
+  "second_email": null
+}

@@ -41,6 +41,7 @@
 							<artifactId>postgresql-42.7.1</artifactId>
 						</sharedLibrary>
 					</sharedLibraries>
+					<classifier>mule-application</classifier>
 				</configuration>
 			</plugin>
 			<plugin>
@@ -83,12 +84,6 @@
 			<classifier>mule-plugin</classifier>
 		</dependency>
 		<dependency>
-			<groupId>org.mule.modules</groupId>
-			<artifactId>mule-apikit-module</artifactId>
-			<version>1.9.2</version>
-			<classifier>mule-plugin</classifier>
-		</dependency>
-		<dependency>
 			<groupId>org.mule.connectors</groupId>
 			<artifactId>mule-db-connector</artifactId>
 			<version>1.14.8</version>
@@ -123,6 +118,12 @@
 			<artifactId>assertions</artifactId>
 			<version>1.2.1</version>
 			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.mule.modules</groupId>
+			<artifactId>mule-apikit-module</artifactId>
+			<version>1.10.2</version>
+			<classifier>mule-plugin</classifier>
 		</dependency>
 	</dependencies>
 
