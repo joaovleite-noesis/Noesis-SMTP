@@ -1,0 +1,42 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<types:mule xmlns:types="http://www.mulesoft.org/schema/mule/types">
+  <types:catalog>
+    <types:type name="event-proc-metadata" format="json">
+      <types:shape format="weave" example="examples/event-metadata.json"><![CDATA[%dw 2.0
+
+type event_proc_metadata = {|
+  ID: String, 
+  titulo: String, 
+  descricao: String, 
+  data_abertura: String, 
+  check_view: Null, 
+  data_conc_esp: String, 
+  data_conclusao: Null, 
+  equipa_respons: Number {"typeId": "int"}, 
+  TL_email: String, 
+  status: Boolean, 
+  categoria_ID: Number {"typeId": "int"}, 
+  prioridade_ID: Number {"typeId": "int"}, 
+  validacao_client: Boolean, 
+  first_email: Null, 
+  second_email: Null
+|} {"example": "{\\\"ID\\\":\\\"9\\\",\\\"titulo\\\":\\\"Preciso de Ajuda\\\",\\\"descricao\\\":\\\"Minha Aplica\u00E7\u00E3o n\u00E3o est\u00E1 a funcionar corretamente\\\",\\\"data_abertura\\\":\\\"2024-02-07T14:00:00\\\",\\\"check_view\\\":null,\\\"data_conc_esp\\\":\\\"2024-02-07T17:00:00\\\",\\\"data_conclusao\\\":null,\\\"equipa_respons\\\":1,\\\"TL_email\\\":\\\"joaodev8@gmail.com\\\",\\\"status\\\":false,\\\"categoria_ID\\\":1,\\\"prioridade_ID\\\":1,\\\"validacao_client\\\":false,\\\"first_email\\\":null,\\\"second_email\\\":null}"}
+
+]]></types:shape>
+    </types:type>
+  </types:catalog>
+  <types:enrichment select="#1d5c6baa-8d0b-4500-b3be-497f6dd5980b">
+    <types:processor-declaration>
+      <types:input-event>
+        <types:message>
+          <types:payload type="event-proc-metadata"/>
+        </types:message>
+      </types:input-event>
+      <types:output-event>
+        <types:message>
+          <types:payload type="event-proc-metadata"/>
+        </types:message>
+      </types:output-event>
+    </types:processor-declaration>
+  </types:enrichment>
+</types:mule>

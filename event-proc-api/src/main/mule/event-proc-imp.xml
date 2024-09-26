@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:batch="http://www.mulesoft.org/schema/mule/batch"
+	xmlns:db="http://www.mulesoft.org/schema/mule/db"
+	xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd
+http://www.mulesoft.org/schema/mule/batch http://www.mulesoft.org/schema/mule/batch/current/mule-batch.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<http:request-config name="HTTP_Request_configuration" doc:name="HTTP Request configuration" doc:id="3a27f9aa-e54f-449e-8ea3-a58ed92b9f7d" basePath="/api/">
+		<http:request-connection host="mail-sys-api.us-e2.cloudhub.io" />
+	</http:request-config>
+	<flow name="processIncident_Flow" doc:id="bef8f611-2797-4ab3-98a8-b08f0575ece4" >
+		<scheduler doc:name="Scheduler" doc:id="f04f5489-3e26-4443-b79b-ed6e33dd538c" >
+			<scheduling-strategy >
+				<fixed-frequency frequency="15" timeUnit="MINUTES"/>
+			</scheduling-strategy>
+		</scheduler>
+		<http:request method="GET" doc:name="Request getIncidents" doc:id="bfaa64c9-b8a0-4fd2-87a3-af1b9075dcc4" config-ref="HTTP_Request_configuration" path="incidents"/>
+		<batch:job jobName="event-proc-implementationBatch_Job" doc:id="c053f63b-fb68-4623-a0e6-e390d3a5c12c" >
+			<batch:process-records >
+				<batch:step name="Batch_Step" doc:id="296ae5d4-e784-47cf-a840-1d5098150d2f" acceptPolicy="ALL">
+					<flow-ref doc:name="Flow Reference" doc:id="75d0257a-3578-4d0b-ab14-6ea172c332ab" name="TL_email" target="TL_email" />
+					<ee:transform doc:name="Transform Message" doc:id="1d5c6baa-8d0b-4500-b3be-497f6dd5980b" >
+						<ee:message >
+							<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{
+	ID: payload.ID,
+	titulo: payload.titulo,
+	descricao: payload.descricao,
+	data_abertura: payload.data_abertura,
+	check_view: payload.check_view,
+	data_conc_esp: payload.data_conc_esp,
+	data_conclusao: payload.data_conclusao,
+	equipa_respons: payload.equipa_respons,
+	TL_email: vars.TL_email,
+	status: payload.status,
+	categoria_ID: payload.categoria_ID,
+	prioridade_ID: payload.prioridade_ID,
+	validacao_client: payload.validacao_client,
+	first_email: payload.first_email,
+	second_email: payload.second_email
+}]]></ee:set-payload>
+						</ee:message>
+					</ee:transform>
+					<http:request method="POST" doc:name="Request sendEmail" doc:id="b6d186ed-2e95-4d1e-9f38-801fa4e9be19" config-ref="HTTP_Request_configuration" path="mails">
+		</http:request>
+				</batch:step>
+			</batch:process-records>
+			<batch:on-complete >
+				<logger level="INFO" doc:name="Logger" doc:id="4e92bf97-c9a4-4f79-8e08-69d7f5528c10" />
+			</batch:on-complete>
+		</batch:job>
+	</flow>
+	<flow name="TL_email" doc:id="c56a6a0c-985b-40e5-8455-d0a06fc79e93" >
+		<db:select doc:name="Select" doc:id="b3966a19-7de8-4ac8-857d-22d14746c892" config-ref="Database_Config">
+			<db:sql ><![CDATA[SELECT email
+	FROM public.utilizador
+	WHERE "equipa_respons" = :equipa_respons AND "cargo_ID" = 1;]]></db:sql>
+			<db:input-parameters ><![CDATA[#['equipa_respons': payload.equipa_respons]]]></db:input-parameters>
+		</db:select>
+	</flow>
+</mule>

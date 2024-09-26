@@ -1,0 +1,24 @@
+#%RAML 1.0
+title: monitor-sys-api
+
+/monitor:
+  get:
+    queryParameters:
+      nome: string
+    responses:
+      200:
+        body:
+          application/json:
+            example:
+              [
+                {
+                  "Servidor online"
+                }
+              ]
+      404:
+        body:
+          application/json:
+            example:
+              {
+                "Servidor offline"
+              }
